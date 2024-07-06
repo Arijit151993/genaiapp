@@ -49,7 +49,7 @@ body {
 
 .mainBanner .custom_button button {
   padding: 10px 30px;
-  background: rgb(93, 90, 255);
+  background: rgb(122, 120, 235);
   border: none;
   border-radius: 50px;
   color: #ffffff;
@@ -188,6 +188,12 @@ body {
     border: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
+  .submit_button button:hover {
+    background-color: #007bff; /* or any other color you prefer */
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
 </style>
 <body>
 
@@ -301,7 +307,7 @@ body {
         const form = document.querySelector('form');
         const submitButton = document.querySelector('.submit_button button');
 
-        submitButton.addEventListener('click', () => {
+        submitButton.addEventListener('hover', () => {
             submitButton.classList.add('highlighted-button');
         });
         form.addEventListener('submit', async (e) => {
