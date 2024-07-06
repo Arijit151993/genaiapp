@@ -182,6 +182,12 @@ body {
     margin-bottom: 0.5rem;
     line-height: 1.5; /* Increase line spacing for readability */
   }
+  .highlighted-button {
+    background-color: #007bff; /* or any other color you prefer */
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
 </style>
 <body>
 
@@ -293,7 +299,11 @@ body {
 
     <script>
         const form = document.querySelector('form');
-        
+        const submitButton = document.querySelector('.submit_button button');
+
+        submitButton.addEventListener('click', () => {
+            submitButton.classList.add('highlighted-button');
+        });
         form.addEventListener('submit', async (e) => {
 
             e.preventDefault();
