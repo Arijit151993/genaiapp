@@ -214,7 +214,7 @@ body {
                                     <div class="col-sm-3 col-lg-3 col-md-3 col-3">
                                         <div class="custom_col">
                                             <div class="heading">
-                                                <h4>99%</h4>
+                                                <h4><div id="toxicity-score"></div></h4>
                                             </div>
                                             <div class="para">
                                                 <span>Toxicity Score</span>
@@ -224,7 +224,7 @@ body {
                                     <div class="col-sm-3 col-lg-3 col-md-3 col-3">
                                         <div class="custom_col">
                                             <div class="heading">
-                                                <h4>99%</h4>
+                                                <h4><div id="sentiment-score"></div></h4>
                                             </div>
                                             <div class="para">
                                                 <span>Sentiment Score</span>
@@ -234,7 +234,7 @@ body {
                                     <div class="col-sm-3 col-lg-3 col-md-3 col-3">
                                         <div class="custom_col">
                                             <div class="heading">
-                                                <h4>99%</h4>
+                                                <h4><div id="language"></div></h4>
                                             </div>
                                             <div class="para">
                                                 <span>Language</span>
@@ -244,7 +244,14 @@ body {
                                     <div class="col-sm-3 col-lg-3 col-md-3 col-3">
                                         <div class="custom_col">
                                             <div class="heading">
-                                                <h4></h4>
+                                                <h4>
+                                                    <!-- <ul>
+                                                    {% for word in toxic_words %}
+                                                      <li>{{ word }}</li>
+                                                    {% endfor %}
+                                                    </ul> -->
+                                                    <div id="toxic-words"></div>
+                                                </h4>
                                             </div>
                                             <div class="para">
                                                 <span>Toxic Words</span>
@@ -284,38 +291,44 @@ body {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
 
-     <script>
+    <script>
         const form = document.querySelector('form');
-        const listElement = document.querySelector('ol');
         
-
         form.addEventListener('submit', async (e) => {
+
             e.preventDefault();
             const resultList = document.getElementById('result-list');
-            while (resultList.firstChild) {
-            resultList.removeChild(resultList.firstChild);
-            }
-            // Get the user input
+
+            resultList.innerHTML = ''; // Clear the element
+            document.getElementById('toxicity-score').innerHTML = '';
+            document.getElementById('sentiment-score').innerHTML = '';
+            document.getElementById('language').innerHTML = '';
+            document.getElementById('toxic-words').innerHTML = '';
+
             const userInput = document.getElementById('userInputId').value;
-            // Prepare the data to be sent (assuming your code is in a string format)
-            const data = { code: userInput };
-            try {
-                // Send the POST request to the server (assuming your server is running on the same domain)
-                const response = await axios.post('/submit',{ code: userInput });
-                const result = response;
-                const listElement = document.getElementById('result-list');
-                // // Handle successful response
-                result.data.forEach((item) => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = item;
-                    listElement.appendChild(listItem);
+            // try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: userInput })
                 });
-            } catch (error) {
-                // Handle errors
-                console.error(error);
-                document.querySelector('#result').innerHTML = 'Error submitting code.';
-            }
-            });
+                const data = await response.json();
+                // Update the HTML elements with the data
+                console.log('Received data:', data);
+                // document.getElementById('user-input').innerHTML = data.user_input;
+                
+                data.user_input.forEach((item) => {
+                    document.getElementById('result-list').innerHTML += `<li>${item}</li>`;
+                });
+                document.getElementById('toxicity-score').innerHTML = data.toxicity_score;
+                document.getElementById('sentiment-score').innerHTML = data.sentiment_score;
+                document.getElementById('language').innerHTML = data.language;
+                document.getElementById('toxic-words').innerHTML = data.toxic_words;
+            // } catch (error) {
+            //     console.error(error);
+            //     document.querySelector('#result').innerHTML = 'Error submitting code.';
+            // }
+        });
     </script>
 </body>
 </html>

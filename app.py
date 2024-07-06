@@ -1,12 +1,15 @@
 from flask import Flask, render_template, request, jsonify
 import os
 import google.generativeai as genai
+from google.generativeai.types import HarmCategory, HarmBlockThreshold
 import json
 
 app = Flask(__name__)
 
 
-genai.configure(api_key="AIzaSyBC_oh-lSiqb2mWtLFILb4c2fB9gLZZD90")
+genai.configure(api_key="AIzaSyB-n9nVWlbeN9Ey0bGkRNfQSIhE9hDi0FE")
+
+
 
 # Create the model
 # See https://ai.google.dev/api/python/google/generativeai/GenerativeModel
@@ -21,7 +24,8 @@ generation_config = {
 model = genai.GenerativeModel(
   model_name="gemini-1.5-flash",
   generation_config=generation_config,
-  # safety_settings = Adjust safety settings
+ 
+
   # See https://ai.google.dev/gemini-api/docs/safety-settings
 )
 
@@ -29,6 +33,38 @@ model = genai.GenerativeModel(
 @app.route('/')
 def index():
   return render_template('index.html')  # Assuming you have an index.html file
+
+def toxicity_check(query):
+
+
+  model = genai.GenerativeModel(
+    model_name="gemini-1.5-pro",
+    generation_config=generation_config,
+    
+    # See https://ai.google.dev/gemini-api/docs/safety-settings
+    system_instruction="You are a Content Moderation Agent and your task it identify with your intelligence that weather you the content is Toxic in nature of not if it is then you have to give the degree of its toxicity percentage, identify its language , then try to identify the toxic words in that sentiment  and also identify its sentiment score ",
+  )
+
+  chat_session = model.start_chat(
+    history=[
+      {
+        "role": "user",
+        "parts": [
+          "You are bullshit",
+        ],
+      },
+      {
+        "role": "model",
+        "parts": [
+          "## Content Analysis:\n\n**Toxicity:** 90% \n\n**Language:** English\n\n**Toxic_Words:** \"bullshit\"\n\n**Sentiment_Score:** Extremely",
+        ],
+        },
+    ]
+  )
+
+  response = chat_session.send_message(query)
+
+  return(response.text)
 
 
 def RAG_prompt(query):
@@ -46,15 +82,36 @@ def RAG_prompt(query):
     "output: ",
   ])
   json_output = json.loads(response.text)
-  print(json_output['data'])
   return json_output['data']
-
+  
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
   print("Submit Form Router called")
   if request.method == 'POST':
-    user_input = request.json.get('code')
-    return (RAG_prompt(user_input))
-
+    query = request.json.get('code')
+    toxicity = toxicity_check(query)
+    json_output = json.loads(toxicity)
+    user_input = RAG_prompt(query)
+    if(float(json_output["Toxicity"].replace("%", ""))/100)>(0.4):
+      user_input = user_input  
+    else :
+      user_input = "This is not a Toxic Content"
+    print(user_input),
+    print(json_output["Toxicity"])
+    print(json_output["Language"])
+    print(json_output["Toxic_Words"])
+    print(json_output["Sentiment_Score"])
+    data = {
+        'user_input': (user_input),
+        'toxicity_score': json_output["Toxicity"],
+        'sentiment_score': json_output["Sentiment_Score"],
+        'language':json_output["Language"] ,
+        'toxic_words': json_output["Toxic_Words"]
+    }
+    return jsonify(data)
+    
 if __name__ == '__main__':
   app.run()
+
+# query = "This guy is a moron."
+# toxicity_check(query)
