@@ -1,0 +1,166 @@
+*,
+*::after,
+*::after {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+body {
+  background: #d7d7d7;
+}
+
+.mainBanner {
+  height: 340px;
+  background: linear-gradient(90deg, transparent, #e7e4e4, transparent);
+  margin: 20px auto 0;
+  width: 70%;
+}
+
+.mainBanner .content {
+  padding-top: 20px;
+}
+
+.mainBanner .heading {
+  padding: 100px 0 60px 0;
+}
+
+.mainBanner .heading h1 {
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.mainBanner .custom_button button {
+  padding: 10px 30px;
+  background: rgb(93, 90, 255);
+  border: none;
+  border-radius: 50px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.information {
+  margin: 40px 0;
+}
+
+.inforamtion .content {
+  background: #ffffff;
+}
+
+.information .content .heading h3 {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.information .firstCol {
+  height: 250px;
+}
+
+.information .firstCol {
+    background: #ffffffde;
+    padding: 40px 20px;
+}
+
+.information .firstCol .counts .heading h4 {
+    font-size: 16px;
+}
+
+.information .firstCol .counts .para span {
+    font-size: 12px;
+}
+
+.information .content .counts .custom_col {
+  width: 97%;
+  border: 1px solid rgb(193, 193, 193);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 12vh;
+  border-radius: 5px;
+}
+
+.information .msg {
+    margin: 30px 0 ;
+}
+
+.information .inputText {
+    height: 100px;
+    background: #ffffff96;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.information .inputText textarea {
+    resize: none;
+    height: 26px;
+    border: none;
+    width: 100%;
+    background: transparent;
+}
+
+.information .submit_button {
+    margin: 60px 0 30px;
+}
+
+.information .submit_button button {
+    padding: 12px 30px;
+    border: none;
+    border-radius:14px;
+    background: #8173c4;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+@media (max-width:767px) {
+    .information .d-flex.first {
+        display: block !important;
+    }
+
+    .information .customMar {
+        margin: 20px 0;
+    }
+
+    .information .d-flex.second {
+        display: flex;
+    }
+}
+
+@media (max-width:514px) {
+    .mainBanner {
+        height: max-content;
+    }
+
+    .information .inputText{
+        width: 100%;
+    }
+}
+
+.clarification {
+    margin: 1rem;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+  }
+  
+  .clarification h2 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .clarification ol {
+    padding-left: 2rem;
+  }
+  
+  .clarification li {
+    margin-bottom: 0.5rem;
+  }
