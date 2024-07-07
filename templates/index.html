@@ -226,7 +226,7 @@ body {
                                     <div class="col-sm-3 col-lg-3 col-md-3 col-3">
                                         <div class="custom_col">
                                             <div class="heading">
-                                                <h4><div id="toxicity-score"></div></h4>
+                                                <h4><div id="toxicity-score"><Strong></Strong></div></h4>
                                             </div>
                                             <div class="para">
                                                 <span>Toxicity Score</span>
@@ -236,7 +236,7 @@ body {
                                     <div class="col-sm-3 col-lg-3 col-md-3 col-3">
                                         <div class="custom_col">
                                             <div class="heading">
-                                                <h4><div id="sentiment-score"></div></h4>
+                                                <h4><div id="sentiment-score"><Strong></Strong></div></h4>
                                             </div>
                                             <div class="para">
                                                 <span>Sentiment Score</span>
@@ -246,7 +246,7 @@ body {
                                     <div class="col-sm-3 col-lg-3 col-md-3 col-3">
                                         <div class="custom_col">
                                             <div class="heading">
-                                                <h4><div id="language"></div></h4>
+                                                <h4><div id="language"><Strong></Strong></div></h4>
                                             </div>
                                             <div class="para">
                                                 <span>Language</span>
@@ -262,7 +262,7 @@ body {
                                                       <li>{{ word }}</li>
                                                     {% endfor %}
                                                     </ul> -->
-                                                    <div id="toxic-words"></div>
+                                                    <div id="toxic-words"><Strong></Strong></div>
                                                 </h4>
                                             </div>
                                             <div class="para">
@@ -332,14 +332,24 @@ body {
                 // Update the HTML elements with the data
                 console.log('Received data:', data);
                 // document.getElementById('user-input').innerHTML = data.user_input;
+                if (data.user_input !== 'This is not a Toxic Content') {
+                    data.user_input.forEach((item) => {
+                    if (item !== '' && item !== null && item !== undefined) {
+                        document.getElementById('result-list').innerHTML += `<li>${item}</li>`;
+                    }
+                    });
+                    document.getElementById('toxic-words').innerHTML = data.toxic_words;
+                }
+                else
+                {
+                    document.getElementById('result-list').innerHTML += `<li><Strong>This is not a Toxic Content</Strong></li>`
+                    document.getElementById('toxic-words').innerHTML = 'N/A';
+                }
                 
-                data.user_input.forEach((item) => {
-                    document.getElementById('result-list').innerHTML += `<li>${item}</li>`;
-                });
                 document.getElementById('toxicity-score').innerHTML = data.toxicity_score;
                 document.getElementById('sentiment-score').innerHTML = data.sentiment_score;
                 document.getElementById('language').innerHTML = data.language;
-                document.getElementById('toxic-words').innerHTML = data.toxic_words;
+                
             // } catch (error) {
             //     console.error(error);
             //     document.querySelector('#result').innerHTML = 'Error submitting code.';

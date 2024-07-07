@@ -96,6 +96,7 @@ def submit():
       user_input = user_input  
     else :
       user_input = "This is not a Toxic Content"
+      print(user_input)
     print(user_input),
     print(json_output["Toxicity"])
     print(json_output["Language"])
