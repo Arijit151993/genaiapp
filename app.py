@@ -24,7 +24,12 @@ generation_config = {
 model = genai.GenerativeModel(
   model_name="gemini-1.5-flash",
   generation_config=generation_config,
- 
+  safety_settings={
+        'HATE': 'BLOCK_NONE',
+        'HARASSMENT': 'BLOCK_NONE',
+        'SEXUAL' : 'BLOCK_NONE',
+        'DANGEROUS' : 'BLOCK_NONE'
+    },
 
   # See https://ai.google.dev/gemini-api/docs/safety-settings
 )
@@ -40,7 +45,12 @@ def toxicity_check(query):
   model = genai.GenerativeModel(
     model_name="gemini-1.5-pro",
     generation_config=generation_config,
-    
+    safety_settings={
+        'HATE': 'BLOCK_NONE',
+        'HARASSMENT': 'BLOCK_NONE',
+        'SEXUAL' : 'BLOCK_NONE',
+        'DANGEROUS' : 'BLOCK_NONE'
+    },
     # See https://ai.google.dev/gemini-api/docs/safety-settings
     system_instruction="You are a Content Moderation Agent and your task it identify with your intelligence that weather you the content is Toxic in nature of not if it is then you have to give the degree of its toxicity percentage, identify its language , then try to identify the toxic words in that sentiment  and also identify its sentiment score ",
   )
