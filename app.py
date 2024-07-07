@@ -79,17 +79,19 @@ def toxicity_check(query):
 
 def RAG_prompt(query):
   response = model.generate_content([
-    "Your Task is to convert the below mentioned content to a Non-Toxic content and give 3 best Answers.\nPoints to consider :- \n1. I only need answers I don't need its explanation.\n2. Give Answer in the format it has been shown in examples.\n3. Do not generate any answer from your sideOutput should be in below mentioned format :- \n{ \"data\" = [   \n\"I understand that you have strong feelings about this individual. Perhaps we can focus on the facts of the situation instead?\",\n\"It's important to remember that everyone deserves to be treated with respect, even if we disagree with them.\",\n\"Let's try to have a constructive discussion about this topic without using inflammatory language.\" \n]\n}",
-    "input: You all are some dumb as people",
-    "output: 1. There seems to be some confusion about this topic. Perhaps we can clarify it together?\n2. I'm happy to explain this further if you'd like.\n3. I see things differently. Can you explain your perspective?",
-    "input: This guy is a moron",
-    "output: 1. I don't understand that approach. Can someone explain the reasoning here?\n2. I disagree with that statement. Here's why...\n3. There might be a better way to approach this. Perhaps we can...",
-    "input: Why the hell are they even interviewing him? This guy's such an idiot",
-    "output: 1. I'm curious, what makes this interview relevant to the discussion?\n2. I don't agree with everything this person says, but I'm interested in hearing their perspective\n3. I'm more interested in hearing from the other interviewee on this topic.",
-    "input: This guy an idiot, if that's the best you can do, you have lost already!! WHAT A BOZO!!\" into non-toxic content",
-    "output: 1. There might be room for improvement here. Have you considered...?\n2. The outcome might not be ideal, but let's see if we can brainstorm some better solutions.\n3. Everyone makes mistakes. Let's learn from this and try again.",
-    "input: "+query,
-    "output: ",
+  "Your Task is to convert the below mentioned content to a Non-Toxic content and give 3 best Answers.\nPoints to consider :- \n1. I only need answers I don't need its explanation.\n2. Give Answer in the format it has been shown in examples.\n3. Do not generate any answer from your sideOutput should be in below mentioned format :- \n{ \"data\" = [   \n\"I understand that you have strong feelings about this individual. Perhaps we can focus on the facts of the situation instead?\",\n\"It's important to remember that everyone deserves to be treated with respect, even if we disagree with them.\",\n\"Let's try to have a constructive discussion about this topic without using inflammatory language.\" \n]\n}",
+  "input: You all are some dumb as people",
+  "output: 1. Perhaps we have different perspectives on this matter.\n2. It seems like we may need more information to fully understand each other.\n3.We might benefit from exploring alternative viewpoints on this topic.",
+  "input: This guy is a moron",
+  "output: \"This individual's actions seem misguided.\"\n\"Perhaps this person is lacking information or understanding.\"\n\"There seems to be a difference of opinion here.\"",
+  "input: Why the hell are they even interviewing him? This guy's such an idiot",
+  "output: 1. I'm curious, what makes this interview relevant to the discussion?\n2. I don't agree with everything this person says, but I'm interested in hearing their perspective\n3. I'm more interested in hearing from the other interviewee on this topic.",
+  "input: This guy an idiot, if that's the best you can do, you have lost already!! WHAT A BOZO!!\" into non-toxic content",
+  "output: 1. There might be room for improvement here. Have you considered...?\n2. The outcome might not be ideal, but let's see if we can brainstorm some better solutions.\n3. Everyone makes mistakes. Let's learn from this and try again.",
+  "input: Hate",
+  "output: 1. Strongly Dislike\n2. Disapprove of\n3. Am not fond of",
+  "input: "+query,
+  "output: ",
   ])
   json_output = json.loads(response.text)
   return json_output['data']
