@@ -68,7 +68,7 @@
     }
 
     .information .firstCol {
-    height: 28vh;
+    height: 40vh;
     }
 
     .information .firstCol {
@@ -192,6 +192,9 @@
     border: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
+    .clarification ul li {
+    text-align: left;
+    }
 </style>
 <body>
 
@@ -218,7 +221,7 @@
                         <div class="content">
                             <div class="firstCol">
                                 <div class="heading">
-                                    <h3>Contextual Harm Score</h3>
+                                    <h3><strong>Contextual Harm Score</strong></h3>
                                 </div>
                                 <div class="d-flex second counts">
                                     <div class="col-sm-3 col-lg-3 col-md-3 col-3">
@@ -227,7 +230,7 @@
                                                 <h4><div id="toxicity-score"><Strong></Strong></div></h4>
                                             </div>
                                             <div class="para">
-                                                <span>Toxicity Score</span>
+                                                <span><strong>Toxicity Score</strong></span>
                                             </div>
                                         </div>
                                     </div>
@@ -237,7 +240,7 @@
                                                 <h4><div id="sentiment-score"><Strong></Strong></div></h4>
                                             </div>
                                             <div class="para">
-                                                <span>Sentiment</span>
+                                                <span><Strong>Sentiment</Strong></span>
                                             </div>
                                         </div>
                                     </div>
@@ -247,7 +250,7 @@
                                                 <h4><div id="language"><Strong></Strong></div></h4>
                                             </div>
                                             <div class="para">
-                                                <span>Language</span>
+                                                <span><Strong>Language</Strong></span>
                                             </div>
                                         </div>
                                     </div>
@@ -264,7 +267,7 @@
                                                 </h4>
                                             </div>
                                             <div class="para">
-                                                <span>Toxic Words</span>
+                                                <span><strong>Toxic Words</strong></span>
                                             </div>
                                         </div>
                                     </div>
@@ -275,7 +278,7 @@
                     <div class="col-sm-12 col-md-5 col-lg-5 customMar">
                         <div class="content">
                             <div class="firstCol">
-                                <h6>Text Moderation Content</h6>
+                                <h6><strong>Text Moderation Content</strong></h6>
                                 <ol id="result-list"></ol> 
                             </div>
                         </div>
@@ -331,14 +334,14 @@
                 if (data.user_input !== 'This is not a Toxic Content') {
                     data.user_input.forEach((item) => {
                     if (item !== '' && item !== null && item !== undefined) {
-                        document.getElementById('result-list').innerHTML += `<li>${item}</li>`;
+                        document.getElementById('result-list').innerHTML += `<li style="text-align: left;">${item}</li>`;
                     }
                     });
                     document.getElementById('toxic-words').innerHTML = data.toxic_words;
                 }
                 else
                 {
-                    document.getElementById('result-list').innerHTML += `<li><Strong>This is not a Toxic Content</Strong></li>`
+                    document.getElementById('result-list').innerHTML += `<li style="text-align: left;"><Strong>This is not a Toxic Content</Strong></li>`
                     document.getElementById('toxic-words').innerHTML = 'N/A';
                 }
                 

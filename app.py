@@ -114,6 +114,11 @@ def submit():
     print(json_output["Language"])
     print(json_output["Toxic_Words"])
     print(json_output["Sentiment_Score"])
+    if (json_output["Sentiment_Score"]=="Extremely Negative"):
+       json_output["Sentiment_Score"] = "Negative"
+    else :
+      json_output["Sentiment_Score"] = json_output["Sentiment_Score"]
+    
     data = {
         'user_input': (user_input),
         'toxicity_score': json_output["Toxicity"],
